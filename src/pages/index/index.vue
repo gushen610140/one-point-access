@@ -29,18 +29,7 @@
             />
           </view>
           <view class="bottom_area">
-            <view class="date"
-              >{{
-                new Date(moment.date).getMonth() +
-                1 +
-                "/" +
-                new Date(moment.date).getDate() +
-                " " +
-                new Date(moment.date).getHours() +
-                ":" +
-                new Date(moment.date).getMinutes()
-              }}
-            </view>
+            <view class="date">{{ moment.date.substring(5, 16) }} </view>
             <view class="fill" style="flex: 1"></view>
             <image class="like" src="@/static/like_red.png" @click="addLike(moment.id)"> </image>
             <view class="likes_number">{{ JSON.parse(moment.likes).length }} </view>
@@ -79,6 +68,7 @@
   import { getMomentsAPI, postMomentCommentsAPI, putMomentLikesAPI } from "@/api/momentAPIs";
   import { getUserInfoAPI } from "@/api/userAPIs";
   import { generateUUID } from "@/utils/generateUUID";
+  import { detectVersion } from "@/utils/version";
 
   const searchContent = ref("");
   const onPublish = () => {
@@ -101,6 +91,7 @@
 
   const bannerList = ref<Banner[]>();
   onLoad(() => {
+    detectVersion();
     getBannerListAPI().then(res => {
       bannerList.value = res.data;
     });

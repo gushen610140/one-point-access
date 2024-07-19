@@ -25,6 +25,7 @@
   import { postMomentAPI } from "@/api/momentAPIs";
   import { getUserInfoAPI } from "@/api/userAPIs";
   import { path } from "@/utils/path";
+  import { date } from "@/utils/date";
 
   const content = ref("");
 
@@ -68,7 +69,7 @@
             userInfo.data.userId,
             userInfo.data.userName,
             userInfo.data.userAvatar,
-            new Date().toString(),
+            date(new Date()),
             content.value.replace(/<[^>]+>/g, ""),
             JSON.stringify(imageList.value),
             JSON.stringify([]),
@@ -93,6 +94,7 @@
       });
     } else {
       uni.chooseImage({
+        count: 1,
         success: chooseImageRes => {
           const tempFilePaths = chooseImageRes.tempFilePaths;
           uni.uploadFile({
